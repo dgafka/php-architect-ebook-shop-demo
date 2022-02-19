@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  app:
+    image: simplycodedsoftware/php:8.1
+    volumes:
+      - "$PWD:/data/app"
+    user: 1000:1000
+    working_dir: "/data/app"
+    command: sleep 99999
+    networks:
+      - default
+    environment:
+      DATABASE_DSN: pgsql://ecotone:secret@database:5432/ecotone
+  database:
+    image: postgres:12.1
+    networks:
+      - default
+    environment:
+      POSTGRES_USER: "ecotone"
+      POSTGRES_PASSWORD: "secret"
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+networks:
+  default:
+    external:
+      name: ecotone-test
