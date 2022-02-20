@@ -22,7 +22,7 @@ final class Version20220219180553 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<SQL
     CREATE TABLE orders (
-        order_id UUID PRIMARY KEY, 
+        order_id VARCHAR(36) PRIMARY KEY, 
         email VARCHAR(255), 
         credit_card_number VARCHAR(19), 
         related_ebook_ids JSON, 

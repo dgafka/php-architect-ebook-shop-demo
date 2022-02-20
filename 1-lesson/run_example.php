@@ -3,24 +3,25 @@
 use Doctrine\DBAL\Connection;
 use Ecotone\App\BookController;
 use Ecotone\App\OrderController;
+use Ecotone\Lite\EcotoneLiteApplication;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$container = new DI\Container();
 /** @var Connection $connection */
 $connection = include_once __DIR__ . '/migrations-db.php';
-$container->set(Connection::class, $connection);
+$application = EcotoneLiteApplication::boostrap([Connection::class => $connection]);
 
 // prepare for rerunning example
 $connection->executeStatement(<<<SQL
     DELETE FROM ebooks;
     DELETE FROM orders;
-SQL);
+SQL
+);
 
 /** @var BookController $ebookController */
-$ebookController = $container->get(BookController::class);
+$ebookController = $application->getServiceFromContainer(BookController::class);
 /** @var OrderController $orderController */
-$orderController = $container->get(OrderController::class);
+$orderController = $application->getServiceFromContainer(OrderController::class);
 
 $dogStoryEbookId = 1;
 $ebookController->registerEbook(json_encode([
@@ -50,12 +51,13 @@ echo sprintf("Current ebook: %s\n", $ebookController->getEbook($dogStoryEbookId)
 
 echo "Making order for two books\n";
 
-$orderController->placeOrder(\json_encode([
+$orderController->placeOrder(json_encode([
     "email" => "johnybravo@o3.en",
     "ebookIds" => [$dogStoryEbookId, $cookbookId],
     "creditCard" => [
         "number" => "4242424242424242",
-        "validTill" => "12/2028",
+        "validTillMonth" => 12,
+        "validTillYear" => 2028,
         "cvc" => 123
     ]
 ]));
