@@ -19,6 +19,8 @@ services:
     environment:
       POSTGRES_USER: "ecotone"
       POSTGRES_PASSWORD: "secret"
+    ports:
+      - "5432:5432"
   mailhog:
     image: mailhog/mailhog
     logging:

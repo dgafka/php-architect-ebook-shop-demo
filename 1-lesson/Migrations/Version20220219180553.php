@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220217070316 extends AbstractMigration
+final class Version20220219180553 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,11 +21,13 @@ final class Version20220217070316 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<SQL
-    CREATE TABLE ebooks (
-        ebook_id INT PRIMARY KEY,
-        title VARCHAR(255),
-        content TEXT,
-        price FLOAT
+    CREATE TABLE orders (
+        order_id UUID PRIMARY KEY, 
+        email VARCHAR(255), 
+        credit_card_number VARCHAR(19), 
+        related_ebook_ids JSON, 
+        price FLOAT, 
+        occurred_at TIMESTAMP
     )
 SQL);
     }
