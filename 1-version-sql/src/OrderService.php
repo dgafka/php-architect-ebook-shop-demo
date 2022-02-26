@@ -17,13 +17,13 @@ class OrderService
         if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException("Email is incorrect: " . $data["email"]);
         }
-        if (!is_int($data["creditCard"]["validTillMonth"]) || !($data["creditCard"]["validTillMonth"] >= 1 && $data["creditCard"]["validTillMonth"] <= 12)) {
+        if (!($data["creditCard"]["validTillMonth"] >= 1 && $data["creditCard"]["validTillMonth"] <= 12)) {
             throw new \InvalidArgumentException("Month validity must between 1-12, got: " . $data["creditCard"]["validTillMonth"]);
         }
-        if (!is_int($data["creditCard"]["validTillYear"])) {
-            throw new \InvalidArgumentException("Year validity must be integer");
+        if (strlen($data["creditCard"]["validTillYear"]) !== 4) {
+            throw new \InvalidArgumentException("Year must have 4 characters");
         }
-        if (!is_int($data["creditCard"]["cvc"]) && strlen($data["creditCard"]["cvc"]) === 3) {
+        if (strlen($data["creditCard"]["cvc"]) === 3) {
             throw new \InvalidArgumentException("Cvc code must be contain 3 characters");
         }
         if (!$this->validateLuhn($data["creditCard"]["number"])) {
@@ -80,7 +80,7 @@ SQL)->fetchAllAssociative();
      * This validates credit card number using Luhn algorithm
      * @link https://en.wikipedia.org/wiki/Luhn_algorithm
      */
-    function validateLuhn(string $number): bool
+    private function validateLuhn(string $number): bool
     {
         $sum = 0;
         $flag = 0;
