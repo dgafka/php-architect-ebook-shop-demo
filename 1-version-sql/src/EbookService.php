@@ -15,24 +15,10 @@ class EbookService
     {
         $this->validateData($data);
 
-        $this->connection->executeStatement(<<<SQL
-    INSERT INTO ebooks (ebook_id, title, content, price) VALUES (:ebookId, :title, :content, :price) 
-SQL, ["ebookId" => $data["ebookId"], "title" => $data["title"], "content" => $data["content"], "price" => $data["price"]]);
+        $this->connection->insert("ebooks", ["ebook_id" => $data["ebookId"], "title" => $data["title"], "content" => $data["content"], "price" => $data["price"]]);
     }
 
-    public function updateEbook(array $data): void
-    {
-        $ebook = $this->getEbookById($data["ebookId"]);
-
-        $data = array_merge($ebook, $data);
-        $this->validateData($data);
-
-        $this->connection->executeStatement(<<<SQL
-    UPDATE ebooks SET title = :title, content = :content, price = :price WHERE ebook_id = :ebookId 
-SQL, ["ebookId" => $data["ebookId"], "title" => $data["title"], "content" => $data["content"], "price" => $data["price"]]);
-    }
-
-    public function getEbookById(mixed $ebookId): array
+    public function getEbookById(int $ebookId): array
     {
         $ebook = $this->connection->executeQuery(<<<SQL
     SELECT * FROM ebooks WHERE ebook_id = :ebookId

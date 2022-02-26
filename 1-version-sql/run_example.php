@@ -15,6 +15,7 @@ $application = EcotoneLiteApplication::boostrap([Connection::class => $connectio
 $connection->executeStatement(<<<SQL
     DELETE FROM ebooks;
     DELETE FROM orders;
+    DELETE FROM promotions;
 SQL
 );
 
@@ -39,13 +40,6 @@ $ebookController->registerEbook(json_encode([
 ]));
 
 echo "Ebook {$dogStoryEbookId} was registered\n";
-
-$ebookController->updateEbook(json_encode([
-    "ebookId" => $dogStoryEbookId,
-    "price" => 15
-]));
-
-echo "Ebook {$dogStoryEbookId} was updated\n";
 
 echo sprintf("Current ebook: %s\n", $ebookController->getEbook($dogStoryEbookId));
 
