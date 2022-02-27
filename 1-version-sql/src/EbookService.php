@@ -25,7 +25,7 @@ class EbookService
 SQL, ["ebookId" => $ebookId])->fetchAssociative();
 
         if (!$ebook) {
-            throw new InvalidArgumentException("Ebook to update not found");
+            throw new InvalidArgumentException("Ebook not found");
         }
         return $ebook;
     }

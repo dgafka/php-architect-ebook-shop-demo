@@ -4,7 +4,7 @@ namespace Ecotone\App;
 
 use function json_decode;
 
-class BookController
+class EbookController
 {
     public function __construct(private EbookService $ebookService)
     {

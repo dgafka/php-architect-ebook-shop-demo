@@ -4,35 +4,20 @@ namespace Ecotone\App;
 
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use Ecotone\App\Infrastructure\EbookRepository;
 use Ramsey\Uuid\Uuid;
 
 class OrderService
 {
-    public function __construct(private Connection $connection, private EbookService $ebookService, private PromotionService $promotionService, private PaymentGateway $paymentGateway, private EmailService $emailService)
+    public function __construct(private Connection $connection, private EbookRepository $ebookRepository, private PromotionService $promotionService, private PaymentGateway $paymentGateway, private EmailService $emailService)
     {
     }
 
     public function placeOrder(array $data): void
     {
-        if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException("Email is incorrect: " . $data["email"]);
-        }
-        if (!($data["creditCard"]["validTillMonth"] >= 1 && $data["creditCard"]["validTillMonth"] <= 12)) {
-            throw new \InvalidArgumentException("Month validity must between 1-12, got: " . $data["creditCard"]["validTillMonth"]);
-        }
-        if (strlen($data["creditCard"]["validTillYear"]) !== 4) {
-            throw new \InvalidArgumentException("Year must have 4 characters");
-        }
-        if (strlen($data["creditCard"]["cvc"]) !== 3) {
-            throw new \InvalidArgumentException("Cvc code must be contain 3 characters");
-        }
-        if (!$this->validateLuhn($data["creditCard"]["number"])) {
-            throw new \InvalidArgumentException("Credit card number must be valid");
-        }
-
         $relatedEbooks = [];
         foreach ($data["ebookIds"] as $ebookId) {
-            $relatedEbooks[] = $this->ebookService->getEbookById($ebookId);
+            $relatedEbooks[] = $this->ebookRepository->getById($ebookId);
         }
 
         $price = 0;
@@ -74,22 +59,5 @@ SQL)->fetchAllAssociative();
                 "occurred_at" => (new DateTimeImmutable())->format('Y-m-d H:i:s')
             ]
         );
-    }
-
-    /**
-     * This validates credit card number using Luhn algorithm
-     * @link https://en.wikipedia.org/wiki/Luhn_algorithm
-     */
-    private function validateLuhn(string $number): bool
-    {
-        $sum = 0;
-        $flag = 0;
-
-        for ($i = strlen($number) - 1; $i >= 0; $i--) {
-            $add = $flag++ & 1 ? $number[$i] * 2 : $number[$i];
-            $sum += $add > 9 ? $add - 9 : $add;
-        }
-
-        return $sum % 10 === 0;
     }
 }
