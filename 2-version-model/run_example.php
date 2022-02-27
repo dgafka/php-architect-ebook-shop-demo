@@ -43,7 +43,6 @@ echo "Ebook {$dogStoryEbookId} was registered\n";
 
 echo sprintf("Current ebook: %s\n", $ebookController->getEbook($dogStoryEbookId));
 
-die("Test");
 echo "Making order for two books\n";
 
 $orderController->placeOrder(json_encode([

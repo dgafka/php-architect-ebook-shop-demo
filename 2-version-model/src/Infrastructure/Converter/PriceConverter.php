@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecotone\App\Infrastructure;
+namespace Ecotone\App\Infrastructure\Converter;
 
 use Ecotone\App\Model\Ebook\Price;
 use Ecotone\Messaging\Attribute\Converter;

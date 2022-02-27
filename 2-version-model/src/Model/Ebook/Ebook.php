@@ -23,4 +23,14 @@ class Ebook
         $this->content = $data["content"];
         $this->price = $data["price"];
     }
+
+    public function getPrice(): Price
+    {
+        return $this->price;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
 }

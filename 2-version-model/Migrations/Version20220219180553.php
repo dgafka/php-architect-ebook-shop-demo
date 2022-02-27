@@ -24,7 +24,7 @@ final class Version20220219180553 extends AbstractMigration
     CREATE TABLE orders (
         order_id VARCHAR(36) PRIMARY KEY, 
         email VARCHAR(255), 
-        credit_card_number VARCHAR(19), 
+        credit_card JSON, 
         related_ebook_ids JSON, 
         price FLOAT, 
         occurred_at TIMESTAMP
