@@ -32,8 +32,8 @@ SQL, ["ebookId" => $ebookId])->fetchAssociative();
 
     private function validateData(array $data): void
     {
-        if ($data["price"] <= 0) {
-            throw new InvalidArgumentException("Ebook price must be higher than 0");
+        if ($data["price"] < 0) {
+            throw new InvalidArgumentException("Ebook price must be higher or equal to 0");
         }
         if (strlen($data["title"]) <= 0) {
             throw new InvalidArgumentException("Title must contain any words");

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecotone\App\Model\Ebook;
+namespace Ecotone\App\Model\Order;
 
 final class CreditCard
 {

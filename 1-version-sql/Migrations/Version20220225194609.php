@@ -23,7 +23,7 @@ final class Version20220225194609 extends AbstractMigration
         $this->addSql(<<<SQL
     CREATE TABLE promotions
     (
-        email VARCHAR(255),
+        email VARCHAR(255) PRIMARY KEY,
         amount_of_orders INT
     )
 SQL);
