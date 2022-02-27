@@ -3,8 +3,8 @@
 namespace Ecotone\App;
 
 use Ecotone\App\Infrastructure\EbookRepository;
-use Ecotone\App\Model\Ebook;
-use Ecotone\App\Model\Price;
+use Ecotone\App\Model\Ebook\Ebook;
+use Ecotone\App\Model\Ebook\Price;
 use Ecotone\Messaging\Gateway\Converter\Serializer;
 use function json_decode;
 

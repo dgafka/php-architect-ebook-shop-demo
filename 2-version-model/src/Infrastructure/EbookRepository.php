@@ -3,7 +3,7 @@
 namespace Ecotone\App\Infrastructure;
 
 use Doctrine\DBAL\Connection;
-use Ecotone\App\Model\Ebook;
+use Ecotone\App\Model\Ebook\Ebook;
 use Ecotone\Messaging\Conversion\MediaType;
 use Ecotone\Messaging\Gateway\Converter\Serializer;
 

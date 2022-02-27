@@ -2,7 +2,7 @@
 
 namespace Ecotone\App\Infrastructure;
 
-use Ecotone\App\Model\Price;
+use Ecotone\App\Model\Ebook\Price;
 use Ecotone\Messaging\Attribute\Converter;
 
 class PriceConverter

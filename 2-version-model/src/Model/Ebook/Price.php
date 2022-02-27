@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecotone\App\Model;
+namespace Ecotone\App\Model\Ebook;
 
 final class Price
 {

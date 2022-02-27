@@ -2,8 +2,8 @@
 
 namespace Ecotone\App;
 
-use Ecotone\App\Model\CreditCard;
-use Ecotone\App\Model\Price;
+use Ecotone\App\Model\Ebook\CreditCard;
+use Ecotone\App\Model\Ebook\Price;
 
 class PaymentGateway
 {

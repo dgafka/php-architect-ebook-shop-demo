@@ -3,7 +3,7 @@
 namespace Ecotone\App;
 
 use Doctrine\DBAL\Connection;
-use Ecotone\App\Model\Email;
+use Ecotone\App\Model\Ebook\Email;
 
 class PromotionService
 {
