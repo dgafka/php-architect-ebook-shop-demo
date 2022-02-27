@@ -51,6 +51,8 @@ class OrderService
             $this->connection->commit();
         }catch (\Throwable $exception) {
             $this->connection->rollBack();
+
+            throw $exception;
         }
     }
 
