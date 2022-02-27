@@ -70,7 +70,7 @@ SQL)->fetchAllAssociative();
             [
                 "order_id" => Uuid::uuid4()->toString(),
                 "email" => $data["email"],
-                "credit_card_number" => $data["creditCard"]["number"],
+                "credit_card" => \json_encode($data["creditCard"]),
                 "related_ebook_ids" => json_encode($data["ebookIds"]),
                 "price" => $price,
                 "occurred_at" => (new DateTimeImmutable())->format('Y-m-d H:i:s')
