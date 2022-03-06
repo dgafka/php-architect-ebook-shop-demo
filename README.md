@@ -18,7 +18,7 @@ We will build E-Book Shop:
 This provides implementation using SQLs only
 2. `2-version-model (Making application more maintainable)`  
 This provides implementation by introducing Model 
-3. `3-version-messaging (Making application solid)`  
+3. `3-version-messaging (Making application stable)`  
 This provides implementation that is extended by Messaging architecture
 
 ## Configuration
