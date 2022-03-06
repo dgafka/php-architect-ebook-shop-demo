@@ -19,7 +19,7 @@ This provides implementation using SQLs only
 2. `2-version-model (Making application more maintainable)`  
 This provides implementation by introducing Model 
 3. `3-version-messaging (Making application solid)`  
-This provides implementation that is extended by messaging
+This provides implementation that is extended by Messaging architecture
 
 ## Configuration
 
