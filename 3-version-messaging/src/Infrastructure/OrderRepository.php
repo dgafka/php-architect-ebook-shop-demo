@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Ecotone\App\Model\Order\Order;
 use Ecotone\Messaging\Conversion\MediaType;
 use Ecotone\Messaging\Gateway\Converter\Serializer;
+use Ecotone\Modelling\Attribute\QueryHandler;
 use Ramsey\Uuid\UuidInterface;
 
 class OrderRepository
@@ -49,6 +50,7 @@ SQL, "orders", "order_id"),
     /**
      * @return Order[]
      */
+    #[QueryHandler("getAllOrders")]
     public function getAll(): array
     {
         $data = $this->connection->executeQuery(sprintf(<<<SQL

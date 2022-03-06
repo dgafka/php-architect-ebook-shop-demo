@@ -30,7 +30,7 @@ class Ebook
         $this->price = $command->price;
     }
 
-    #[CommandHandler("ebook.register")]
+    #[CommandHandler("registerEbook")]
     public static function register(RegisterEbook $command): self
     {
         return new self($command);

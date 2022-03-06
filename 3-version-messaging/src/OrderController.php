@@ -7,12 +7,13 @@ use Ecotone\App\Model\Order\CreditCard;
 use Ecotone\App\Model\Order\Email;
 use Ecotone\Messaging\Gateway\Converter\Serializer;
 use Ecotone\Modelling\CommandBus;
+use Ecotone\Modelling\QueryBus;
 use function json_decode;
 use function json_encode;
 
 class OrderController
 {
-    public function __construct(private CommandBus $commandBus, private OrderRepository $orderRepository, private Serializer $serializer)
+    public function __construct(private CommandBus $commandBus, private QueryBus $queryBus)
     {
     }
 
@@ -23,9 +24,6 @@ class OrderController
 
     public function getOrders(): string
     {
-        return $this->serializer->convertFromPHP(
-            $this->orderRepository->getAll(),
-            "application/json"
-        );
+        return $this->queryBus->sendWithRouting("getAllOrders", expectedReturnedMediaType: "application/json");
     }
 }

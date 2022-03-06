@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Ecotone\App\Model\Ebook\Ebook;
 use Ecotone\Messaging\Conversion\MediaType;
 use Ecotone\Messaging\Gateway\Converter\Serializer;
+use Ecotone\Modelling\Attribute\QueryHandler;
 
 class EbookRepository
 {
@@ -20,6 +21,7 @@ class EbookRepository
         $this->connection->insert("ebooks", $this->convertCamelCaseToUnderscores($data));
     }
 
+    #[QueryHandler("getEbook")]
     public function getById(int $ebookId): Ebook
     {
         $data = $this->connection->executeQuery(sprintf(<<<SQL
