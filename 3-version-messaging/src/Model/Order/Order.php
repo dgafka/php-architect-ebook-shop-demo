@@ -16,13 +16,13 @@ class Order
     private Price $price;
     private \DateTimeImmutable $occurredAt;
 
-    public function __construct(array $data)
+    public function __construct(PlaceOrder $command, Price $price)
     {
         $this->orderId = Uuid::uuid4();
-        $this->email = $data['email'];
-        $this->creditCard = $data['creditCard'];
-        $this->relatedEbookIds = $data['ebookIds'];
-        $this->price = $data['price'];
+        $this->email = $command->email;
+        $this->creditCard = $command->creditCard;
+        $this->relatedEbookIds = $command->ebookIds;
+        $this->price = $price;
         $this->occurredAt = new \DateTimeImmutable('now');
     }
 

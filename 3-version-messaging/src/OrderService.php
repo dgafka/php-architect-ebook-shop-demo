@@ -10,7 +10,9 @@ use Ecotone\App\Infrastructure\PromotionRepository;
 use Ecotone\App\Model\Ebook\Price;
 use Ecotone\App\Model\Order\Event\OrderPaymentWasSuccessful;
 use Ecotone\App\Model\Order\Event\OrderWasPlaced;
+use Ecotone\App\Model\Order\PlaceOrder;
 use Ecotone\Messaging\Attribute\Asynchronous;
+use Ecotone\Modelling\Attribute\CommandHandler;
 use Ecotone\Modelling\Attribute\EventHandler;
 use Ecotone\Modelling\EventBus;
 use Ramsey\Uuid\Uuid;
@@ -21,10 +23,11 @@ class OrderService
     {
     }
 
-    public function placeOrder(array $data): void
+    #[CommandHandler("placeOrder")]
+    public function placeOrder(PlaceOrder $command): void
     {
         $relatedEbooks = [];
-        foreach ($data["ebookIds"] as $ebookId) {
+        foreach ($command->ebookIds as $ebookId) {
             $relatedEbooks[] = $this->ebookRepository->getById($ebookId);
         }
 
@@ -33,10 +36,10 @@ class OrderService
             $price = $price->add($ebook->getPrice());
         }
 
-        $promotion = $this->promotionRepository->getById($data['email']);
-        $data["price"] = $promotion->isGrantedToPromotion() ? ($price->multiply(0.9)) : $price;
+        $promotion = $this->promotionRepository->getById($command->email);
+        $price = $promotion->isGrantedToPromotion() ? ($price->multiply(0.9)) : $price;
 
-        $order = new \Ecotone\App\Model\Order\Order($data);
+        $order = new \Ecotone\App\Model\Order\Order($command, $price);
         $this->orderRepository->save($order);
 
         $this->eventBus->publish(new OrderWasPlaced($order->getOrderId()));
