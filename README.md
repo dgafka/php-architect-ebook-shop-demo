@@ -1,4 +1,4 @@
-# php-architect-repairing-house
+# PHP Architect - Ebook Shop Demo Application
 
 This repository provides real implementation of topic discussed in Article from PHP Architect.  
 
