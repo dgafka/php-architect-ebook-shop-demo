@@ -10,7 +10,7 @@
     "php-di/php-di": "^6.3",
     "doctrine/dbal": "^3.3",
     "doctrine/migrations": "^3.4",
-    "ecotone/lite-application": "^1.1"
+    "ecotone/lite-dbal-starter": "^1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

@@ -3,19 +3,22 @@
 use Doctrine\DBAL\Connection;
 use Ecotone\App\EbookController;
 use Ecotone\App\OrderController;
+use Ecotone\Dbal\DbalConnection;
 use Ecotone\Lite\EcotoneLiteApplication;
+use Enqueue\Dbal\DbalConnectionFactory;
 
 require __DIR__ . '/vendor/autoload.php';
 
 /** @var Connection $connection */
 $connection = include_once __DIR__ . '/migrations-db.php';
-$application = EcotoneLiteApplication::boostrap([Connection::class => $connection]);
+$application = EcotoneLiteApplication::boostrap([Connection::class => $connection, DbalConnectionFactory::class => DbalConnection::create($connection)]);
 
 // prepare for rerunning example
 $connection->executeStatement(<<<SQL
     DELETE FROM ebooks;
     DELETE FROM orders;
     DELETE FROM promotions;
+    DELETE FROM enqueue;
 SQL
 );
 
@@ -57,3 +60,6 @@ $orderController->placeOrder(json_encode([
 ]));
 
 echo sprintf("Orders history:\n%s\n", $orderController->getOrders());
+
+echo "\n\nMessage consuming starts. Use of ctrl+c and wait few sceonds to stop process...\n";
+$application->run("order_channel");

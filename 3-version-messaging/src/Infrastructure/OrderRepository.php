@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Ecotone\App\Model\Order\Order;
 use Ecotone\Messaging\Conversion\MediaType;
 use Ecotone\Messaging\Gateway\Converter\Serializer;
+use Ramsey\Uuid\UuidInterface;
 
 class OrderRepository
 {
@@ -20,6 +21,29 @@ class OrderRepository
         $data["creditCard"] = \json_encode($data['creditCard']);
 
         $this->connection->insert("orders", $this->convertCamelCaseToUnderscores($data));
+    }
+
+    public function getById(UuidInterface $orderId): Order
+    {
+        $data = $this->connection->executeQuery(sprintf(<<<SQL
+    SELECT * FROM %s WHERE %s = :id
+SQL, "orders", "order_id"),
+            ["id" => $orderId->toString()]
+        )->fetchAssociative();
+
+        if (!$data) {
+            throw new \InvalidArgumentException("Order not found");
+        }
+
+        $data = $this->underscoresToCamelCase($data);
+        $data["relatedEbookIds"] = \json_decode($data["relatedEbookIds"], true);
+        $data["creditCard"] = \json_decode($data["creditCard"], true);
+
+        return $this->serializer->convertToPHP(
+            $data,
+            MediaType::APPLICATION_X_PHP_ARRAY,
+            Order::class
+        );
     }
 
     /**

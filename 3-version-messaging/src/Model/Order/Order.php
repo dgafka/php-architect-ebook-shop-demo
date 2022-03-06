@@ -26,6 +26,11 @@ class Order
         $this->occurredAt = new \DateTimeImmutable('now');
     }
 
+    public function getOrderId(): UuidInterface
+    {
+        return $this->orderId;
+    }
+
     public function getCreditCard(): CreditCard
     {
         return $this->creditCard;
@@ -42,5 +47,10 @@ class Order
     public function getPrice(): Price
     {
         return $this->price;
+    }
+
+    public function getEmail(): Email
+    {
+        return $this->email;
     }
 }
