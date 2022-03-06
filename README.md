@@ -14,12 +14,12 @@ We will build E-Book Shop:
 
 ## Implementations
 
-1. `1-version-sql`  
+1. `1-version-sql (DBAL)`  
 This provides implementation using SQLs only
-2. `2-version-model (Making application more maintainable)`  
-This provides implementation by introducing Model 
-3. `3-version-messaging (Making application stable)`  
-This provides implementation that is extended by Messaging architecture
+2. `2-version-model (DDD,Aggregates,Value Objects)`  
+This provides implementation by introducing Model to make application more maintainable. 
+3. `3-version-messaging (CQRS,Events,Asynchronicity)`  
+This provides implementation that is extended by Messaging architecture to make application more solid and stable.
 
 ## Configuration
 
